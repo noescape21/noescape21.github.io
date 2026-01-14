@@ -1,0 +1,16 @@
+title: 'noescape21.github.io'
+description: "noescape21 blog site"
+baseurl: "/"
+url: "https://noescape21.me/"
+
+header_pages: 
+  - index.md
+  - blog.md
+  - about.md
+  - contact.md
+
+style: dark
+
+footer: '© 2026 <b>noescape21</b> Some rights reserved'
+markdown: kramdown
+remote_theme: b2a3e8/jekyll-theme-console
