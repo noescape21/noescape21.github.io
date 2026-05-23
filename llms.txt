@@ -1,0 +1,10 @@
+# Muhammad Saad — Security Analyst
+
+Field notes on offensive security, malware analysis, detection engineering, and tooling.
+
+## Key pages
+- /          : Home — bio, experience, side projects, certifications
+- /#blog     : Blog — research write-ups and notes
+
+## About
+Muhammad Saad is a Security Analyst at StrikeReady, formerly Malware Analyst at DFRSC.
