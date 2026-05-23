@@ -4,16 +4,16 @@ layout: page
 permalink: /contact
 ---
 
-# Get in touch!
+# Get in touch
 
-<form>
-  <input type="text" id="name" name="name" placeholder="name:" autocomplete="off">
-  <input type="text" id="email" name="email" placeholder="email:" autocomplete="off">
-  <textarea rows="5" id="message" name="message" placeholder="message:" autocomplete="off"></textarea>
-  <input type="submit" value="[ submit ]">
-</form>
-<br>
-You may also send me an email at noescape21@proton.me
+The fastest way to reach me is email:
 
+**[you@domain.com](mailto:you@domain.com)**
 
-<br />
+Or find me at:
+
+- [LinkedIn](https://linkedin.com/in/yourhandle)
+- [GitHub](https://github.com/yourhandle)
+- [Twitter / X](https://x.com/yourhandle)
+
+PGP key available on request.

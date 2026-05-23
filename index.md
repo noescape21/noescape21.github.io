@@ -3,31 +3,85 @@ title: /
 layout: page
 permalink: /
 ---
+
 <pre>
-_           _
- ._   _   _   _   _  (_   _  |_)  _ 
- | | (_) (/_ _) (_  |   (_| |   (/_
+ _       _                    _ 
+| |__   | |  _   _    ___    (_)
+| '_ \  | | | | | |  / _ \   | |
+| |_) | | | | |_| | |  __/   | |
+|_.__/  |_|  \__,_|  \___|   |_|
 
-<font size=3>                                                                    
-Welcome to noescape's landing page (GNU/Linux 2.6.19-48-generic x86_64)
- * Blog:      https://noescape21.github.io/blog
- * About:     https://noescape21.github.io/about
- * Contact:   https://noescape21.github.io/contact
-  
-  System information as of Fri 12 Jun 1987 23:39:36 PM UTC
-  System load:  0.15               Processes:              153
-  Usage of /:   87.9% of 29.40GB   Users logged in:        1
-  Memory usage: 20%                IPv4 address for ens32: 185.199.111.153
-  Swap usage:   5%                 IPv4 address for ens33: 140.82.112.3
-  => / is using 54.9% of 29.40GB
+Welcome — Defensive Security Analyst notebook.
+ * Blog:      /blog
+ * Contact:   /contact
 
-140 updates can be installed immediately.
-2 of these updates are security updates.
-To see these additional updates run: apt list --upgradable
-  
-*** System Start***
-Last login: Fri Jun 12 1987 02:32:58 from 10.0.0.1
-$ cd noescape
- </font>
+System: linux 6.1.0-soc x86_64
+Role:   Defensive Security Analyst
+Loc:    Remote · UTC+0
+Status: Open to roles & collaboration
 
+$ whoami
 </pre>
+
+# Your Name
+
+Defensive security professional specializing in **threat hunting** and
+**detection engineering**. I build instrumentation to turn noise into
+actionable signals.
+
+---
+
+## // Currently
+
+- Building detection-as-code pipelines with Sigma + GitHub Actions
+- Working through TryHackMe SOC Level 2
+- Drafting an internal IR runbook template for small teams
+
+## // Experience
+
+| When    | Role                             | Where                          |
+|---------|----------------------------------|--------------------------------|
+| Present | Defensive Security Analyst       | Independent / Open to roles    |
+| Present | SOC Analyst (Lab)                | TryHackMe SOC Level 1 & 2      |
+| Past    | CTF Player                       | TryHackMe · HTB · KC7          |
+| Past    | IT & Security Foundations        | Self-taught · Home lab         |
+
+## // Stack
+
+- **SIEM & XDR** — Splunk · Microsoft Sentinel · Elastic · Wazuh
+- **Detection** — Sigma · KQL · SPL · YARA · Suricata
+- **Forensics & IR** — Volatility · Autopsy · Velociraptor · TheHive
+- **Threat Intel** — MISP · OpenCTI · MITRE ATT&CK · VirusTotal
+
+## // Projects & Tooling
+
+### [sigma-lab](#)
+Personal collection of Sigma rules for common Windows + Linux attacker
+behaviors, CI-tested against sample logs.
+`#sigma` `#detection`
+
+### [ir-runbook-template](#)
+Lightweight incident-response runbook template for small teams — triage,
+containment, eradication, lessons-learned.
+`#ir` `#process`
+
+### [kql-cheatsheet](#)
+Living cheatsheet of KQL hunting queries for Microsoft Sentinel and
+Defender — sorted by ATT&CK technique.
+`#kql` `#threat-hunting`
+
+### [homelab-detections](#)
+Wazuh + Elastic home lab with custom decoders and dashboards for tracking
+lateral movement attempts.
+`#wazuh` `#elastic` `#lab`
+
+## // Connectivity
+
+- [TryHackMe](https://tryhackme.com/p/yourhandle)
+- [Hack The Box](https://app.hackthebox.com/profile/)
+- [KC7 Cyber](https://kc7cyber.com/)
+- [GitHub](https://github.com/yourhandle)
+- [LinkedIn](https://linkedin.com/in/yourhandle)
+- [Twitter / X](https://x.com/yourhandle)
+- [Medium](https://medium.com/@yourhandle)
+- [Email](mailto:you@domain.com)
