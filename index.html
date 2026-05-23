@@ -127,17 +127,17 @@
       }, [selectedPost]);
 
       const Nav = () => (
-        <nav className="mb-8 border-b border-gray-800/80 pb-4 animate-in fade-in duration-500">
-          <div className="flex justify-end space-x-6 md:space-x-8 font-mono text-sm">
+        <nav className="mb-6 border-b border-gray-800/80 pb-3 animate-in fade-in duration-500">
+          <div className="flex justify-end space-x-4 md:space-x-6 font-mono text-sm">
             <button
               onClick={() => { setActiveTab('home'); setSelectedPost(null); }}
-              className={`${activeTab === 'home' ? 'text-gray-100 underline decoration-emerald-500/50 underline-offset-8' : 'text-gray-500 hover:text-gray-300 transition-colors'}`}
+              className={`${activeTab === 'home' ? 'text-gray-100 underline decoration-emerald-500/50 underline-offset-4' : 'text-gray-500 hover:text-gray-300 transition-colors'}`}
             >
               Index
             </button>
             <button
               onClick={() => { setActiveTab('blog'); setSelectedPost(null); }}
-              className={`${activeTab === 'blog' ? 'text-gray-100 underline decoration-emerald-500/50 underline-offset-8' : 'text-gray-500 hover:text-gray-300 transition-colors'}`}
+              className={`${activeTab === 'blog' ? 'text-gray-100 underline decoration-emerald-500/50 underline-offset-4' : 'text-gray-500 hover:text-gray-300 transition-colors'}`}
             >
               Blog
             </button>
@@ -146,9 +146,9 @@
       );
 
       const Header = () => (
-        <div className="mb-8 animate-in fade-in duration-700">
-          <h1 className="text-3xl md:text-4xl font-mono font-bold tracking-tight text-gray-100 mb-4 md:mb-6">{PROFILE_DATA.name}</h1>
-          <p className="text-gray-400 leading-relaxed md:leading-8 max-w-2xl text-base md:text-lg">
+        <div className="mb-6 animate-in fade-in duration-700">
+          <h1 className="text-3xl md:text-4xl font-mono font-bold tracking-tight text-gray-100 mb-2 md:mb-3">{PROFILE_DATA.name}</h1>
+          <p className="text-gray-400 leading-relaxed md:leading-7 max-w-2xl text-base md:text-lg">
             {PROFILE_DATA.intro}
           </p>
         </div>
