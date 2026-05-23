@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimalist Portfolio</title>
+    
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- React & ReactDOM -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    
+    <!-- Babel compiler to translate JSX in the browser -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Custom minimal animations -->
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-[#0d1117] text-gray-300 font-sans selection:bg-gray-700 selection:text-white">
+    
+    <!-- This is where React will inject our app -->
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        // ==========================================
+        // DATA CONFIGURATION
+        // ==========================================
+        const PROFILE_DATA = {
+            name: "YOUR NAME",
+            intro: "I spend a lot of time thinking about software engineering, system architecture, and building cool things. I use this site to share thoughts that might aid others who are working on similar problems.",
+            footerText: "© 2026 Your Name · Site last updated: May 2026"
+        };
+
+        const EXPERIENCE = [
+            { role: "Senior Software Engineer", company: "Company Name", status: "Present" },
+            { role: "Founder", company: "Your Startup", status: "Present" },
+            { role: "Full Stack Developer", company: "Previous Tech Inc.", status: "Past" },
+            { role: "Intern", company: "Local Dev Shop", status: "Past" },
+        ];
+
+        const PROJECTS = [
+            { name: "Project Alpha", description: "An open source tool designed to audit cloud environments. It analyzes configurations to identify security risks." },
+            { name: "Awesome Script", description: "A command-line tool for automating daily workflow tasks and establishing persistence." },
+            { name: "Mock Threat Matrix", description: "An open source offensive security focused threat matrix for modern infrastructure with an emphasis on exploitation." },
+        ];
+
+        const CERTIFICATIONS = [
+            { abbr: "OSCP", full: "Offensive Security Certified Professional", status: "In Progress" },
+        ];
+
+        const BLOG_POSTS = [
+            { 
+                id: 1, 
+                title: "Discovering New Attack Paths in 2026", 
+                date: "May 12, 2026", 
+                readTime: "5 min read",
+                content: "As infrastructure evolves, so do the methods to exploit it. In this post, we explore the theoretical attack vectors surrounding ephemeral containers and improperly scoped IAM roles in serverless architectures.\n\nBy leveraging misconfigurations, attackers can often achieve persistence even in environments designed to be stateless. The key takeaway? Always audit your roles, not just your code."
+            },
+            { 
+                id: 2, 
+                title: "Human Memory Management for Developers", 
+                date: "April 04, 2026", 
+                readTime: "8 min read",
+                content: "We spend a lot of time optimizing our code to use less RAM, but how often do we optimize our own cognitive load? \n\nContext switching is the garbage collector of the human brain, pausing our execution and draining our resources. Using tools like thorough documentation, standardized workflows, and 'second brain' note-taking can drastically reduce the mental overhead required to jump back into a complex codebase."
+            },
+            { 
+                id: 3, 
+                title: "A Tale of Two Web Frameworks", 
+                date: "December 15, 2025", 
+                readTime: "12 min read",
+                content: "I recently migrated a mid-sized microservice from Framework A to Framework B. The performance gains were negligible, but the developer experience was night and day.\n\nThis article breaks down the pros and cons of both, focusing not on raw benchmark numbers, but on the ease of writing tests, handling middleware, and debugging obscure errors at 2 AM."
+            },
+        ];
+
+        const LINKS = [
+            { 
+                label: "GitHub", 
+                url: "https://github.com/yourusername",
+                icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="#ffffff" className="opacity-60 group-hover:opacity-100 transition-opacity duration-200"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            },
+            { 
+                label: "LinkedIn", 
+                url: "https://linkedin.com/in/yourusername",
+                icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="#0A66C2" className="opacity-60 group-hover:opacity-100 transition-opacity duration-200"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            },
+            { 
+                label: "Medium", 
+                url: "https://medium.com/@yourusername",
+                icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="#ffffff" className="opacity-60 group-hover:opacity-100 transition-opacity duration-200"><path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/></svg>
+            },
+            { 
+                label: "Hack The Box", 
+                url: "https://app.hackthebox.com/profile/yourid",
+                icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="#9FEF00" className="opacity-60 group-hover:opacity-100 transition-opacity duration-200"><path d="M11.996 0L.457 6.55v10.9L11.996 24l11.547-6.55V6.55L11.996 0zM10.8 18.84l-7.7-4.44V8.46l2.5 1.45v3.05l5.2 3.01v2.87zm1.2-1.74l-5.2-3.02v-5.9l5.2 3.02v5.9zm1.2 1.74v-2.87l5.2-3.01V9.9l2.5-1.44v5.94l-7.7 4.44zm6.45-8.38l-5.25-3.03V4.4l5.25 3.03v3.04zm-6.45-5.11L7.95 2.33V5.4L13.2 8.43V5.35zm-1.2-1.74L6.75 3.63 12 6.66l5.25-3.03-5.25-3.02z"/></svg>
+            },
+            { 
+                label: "TryHackMe", 
+                url: "https://tryhackme.com/p/yourusername",
+                icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="#ffffff" className="opacity-60 group-hover:opacity-100 transition-opacity duration-200"><path d="M12 0L1.608 6v12L12 24l10.392-6V6L12 0zm0 2.23l8.46 4.88v9.78L12 21.77l-8.46-4.88V7.11L12 2.23zM8.33 8.5h7.34v1.84h-2.75v5.16h-1.84v-5.16H8.33V8.5z"/></svg>
+            },
+            { 
+                label: "KC7", 
+                url: "https://kc7cyber.com/leaderboard",
+                icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" className="opacity-60 group-hover:opacity-100 transition-opacity duration-200"><path d="M12 2L3 6v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V6l-9-4z" fill="none" stroke="#3b82f6" strokeWidth="1.5"/><text x="50%" y="50%" dominantBaseline="middle" textAnchor="middle" fontFamily="monospace" fontWeight="bold" fontSize="8" fill="#3b82f6">KC7</text></svg>
+            },
+        ];
+
+        function App() {
+            const [activeTab, setActiveTab] = useState('home');
+            const [selectedPost, setSelectedPost] = useState(null);
+
+            const Nav = () => (
+                <nav className="mb-12 border-b border-gray-800 pb-4">
+                    <div className="flex items-end justify-between">
+                        <h1 className="text-2xl font-bold tracking-tight text-gray-100">{PROFILE_DATA.name}</h1>
+                        <div className="flex space-x-6 text-sm">
+                            <button 
+                                onClick={() => { setActiveTab('home'); setSelectedPost(null); }} 
+                                className={`${activeTab === 'home' ? 'text-gray-100 underline decoration-gray-500 underline-offset-4' : 'text-gray-400 hover:text-gray-200'}`}
+                            >
+                                Index
+                            </button>
+                            <button 
+                                onClick={() => { setActiveTab('blog'); setSelectedPost(null); }} 
+                                className={`${activeTab === 'blog' ? 'text-gray-100 underline decoration-gray-500 underline-offset-4' : 'text-gray-400 hover:text-gray-200'}`}
+                            >
+                                Blog
+                            </button>
+                        </div>
+                    </div>
+                </nav>
+            );
+
+            const SectionHeader = ({ title }) => (
+                <h2 className="text-lg font-semibold text-gray-200 mt-12 mb-6 border-b border-gray-800 pb-2">{title}</h2>
+            );
+
+            const HomeView = () => (
+                <div className="animate-in">
+                    <p className="text-gray-300 leading-relaxed mb-10">
+                        {PROFILE_DATA.intro}
+                    </p>
+
+                    <SectionHeader title="Job Experience" />
+                    <div className="space-y-3">
+                        {EXPERIENCE.map((job, idx) => (
+                            <div key={idx} className="flex justify-between items-baseline text-sm">
+                                <div>
+                                    <span className="text-gray-200">{job.role}</span>
+                                    <span className="text-gray-500 mx-2">@</span>
+                                    <span className="text-gray-400">{job.company}</span>
+                                </div>
+                                <span className={`text-xs uppercase tracking-wider ${job.status === 'Present' ? 'text-emerald-400' : 'text-gray-500'}`}>
+                                    {job.status}
+                                </span>
+                            </div>
+                        ))}
+                    </div>
+
+                    <SectionHeader title="Connect" />
+                    <div className="flex flex-wrap gap-x-6 gap-y-4 mb-8">
+                        {LINKS.map((link, idx) => (
+                            <a 
+                                key={idx}
+                                href={link.url} 
+                                target="_blank" 
+                                rel="noreferrer"
+                                title={link.label}
+                                className="group hover:scale-110 transition-transform duration-200"
+                            >
+                                {link.icon}
+                            </a>
+                        ))}
+                    </div>
+
+                    <SectionHeader title="Side Projects & Tooling" />
+                    <div className="space-y-6">
+                        {PROJECTS.map((proj, idx) => (
+                            <div key={idx}>
+                                <h3 className="text-gray-200 font-medium mb-1">{proj.name}</h3>
+                                <p className="text-sm text-gray-400 leading-relaxed">{proj.description}</p>
+                            </div>
+                        ))}
+                    </div>
+
+                    <SectionHeader title="Certifications" />
+                    <div className="grid grid-cols-1 text-sm">
+                        {CERTIFICATIONS.map((cert, idx) => (
+                            <div key={idx} className="flex flex-col mb-4">
+                                <div className="flex items-center space-x-3 mb-1">
+                                    <span className="text-gray-200 font-medium text-base">{cert.abbr}</span>
+                                    {cert.status && (
+                                        <span className="text-[10px] font-medium uppercase tracking-wider text-amber-400 bg-amber-400/10 border border-amber-400/20 px-2 py-0.5 rounded-sm">
+                                            {cert.status}
+                                        </span>
+                                    )}
+                                </div>
+                                <span className="text-gray-500">{cert.full}</span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+
+            const BlogView = () => (
+                <div className="animate-in">
+                    <h2 className="text-xl font-bold text-gray-100 mb-8">Writings & Thoughts</h2>
+                    <div className="space-y-8">
+                        {BLOG_POSTS.map(post => (
+                            <article 
+                                key={post.id} 
+                                className="group cursor-pointer"
+                                onClick={() => setSelectedPost(post)}
+                            >
+                                <p className="text-sm text-gray-500 mb-1 flex items-center space-x-3">
+                                    <span>{post.date}</span>
+                                    <span>·</span>
+                                    <span>{post.readTime}</span>
+                                </p>
+                                <h3 className="text-lg font-medium text-gray-200 group-hover:text-emerald-400 transition-colors">
+                                    {post.title}
+                                </h3>
+                            </article>
+                        ))}
+                    </div>
+                </div>
+            );
+
+            const BlogPostView = () => (
+                <div className="animate-in">
+                    <button 
+                        onClick={() => setSelectedPost(null)}
+                        className="mb-8 text-sm text-gray-500 hover:text-gray-300 transition-colors flex items-center gap-2 cursor-pointer"
+                    >
+                        ← Back to articles
+                    </button>
+                    <h2 className="text-2xl font-bold text-gray-100 mb-4">{selectedPost.title}</h2>
+                    <p className="text-sm text-gray-500 mb-8 flex items-center space-x-3">
+                        <span>{selectedPost.date}</span>
+                        <span>·</span>
+                        <span>{selectedPost.readTime}</span>
+                    </p>
+                    <div className="text-gray-300 leading-relaxed space-y-6">
+                        {selectedPost.content.split('\n\n').map((paragraph, i) => (
+                            <p key={i}>{paragraph}</p>
+                        ))}
+                    </div>
+                </div>
+            );
+
+            return (
+                <div className="max-w-3xl mx-auto px-6 py-16 md:py-24">
+                    <Nav />
+                    <main className="min-h-[50vh]">
+                        {activeTab === 'home' && <HomeView />}
+                        {activeTab === 'blog' && !selectedPost && <BlogView />}
+                        {activeTab === 'blog' && selectedPost && <BlogPostView />}
+                    </main>
+                    <footer className="mt-20 pt-8 border-t border-gray-800 text-sm text-gray-500 flex justify-between items-center">
+                        <p>{PROFILE_DATA.footerText}</p>
+                        <a href="#" className="hover:text-gray-300 transition-colors">RSS</a>
+                    </footer>
+                </div>
+            );
+        }
+
+        // Initialize React App
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
