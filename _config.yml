@@ -1,0 +1,15 @@
+title: 'noescape21'
+description: "Defensive Security Analyst — threat hunting, detection engineering, incident response."
+baseurl: "/"
+url: "https://noescape21.me/"
+
+header_pages:
+  - index.md
+  - blog.md
+  - contact.md
+
+style: dark
+
+footer: '© 2026 <b>noescape21</b> — Built for Defense'
+markdown: kramdown
+remote_theme: b2a3e8/jekyll-theme-console
