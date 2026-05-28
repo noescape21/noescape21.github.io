@@ -23,13 +23,17 @@ There were two log format one is `splunk_kv` and second one is `splunk_json`
 
 https://splunk.github.io/splunk-add-on-for-apache-web-server/Configure/
 
+{% raw %}
 ```
 LogFormat "time=%{%s}t.%{usec_frac}t, bytes_in=%I, bytes_out=%O, cookie=\"%{Cookie}i\", server=%v, dest_port=%p, http_content_type=\"%{Content-type}i\", http_method=\"%m\", http_referrer=\"%{Referer}i\", http_user_agent=\"%{User-agent}i\", ident=\"%l\", response_time_microseconds=%D, client=%h, status=%>s, uri_path=\"%U\", uri_query=\"%q\", user=\"%u\"" splunk_kv
 ```
+{% endraw %}
 
+{% raw %}
 ```
 #LogFormat "{\"time\":\"%{%s}t.%{usec_frac}t\", \"bytes_in\":\"%I\", \"bytes_out\":\"%O\", \"cookie\":\"%{Cookie}i\", \"server\":\"%v\", \"dest_port\":\"%p\", \"http_content_type\":\"%{Content-type}i\", \"http_method\":\"%m\", \"http_referrer\":\"%{Referer}i\", \"http_user_agent\":\"%{User-agent}i\", \"ident\":\"%l\", \"response_time_microseconds\":\"%D\", \"client\":\"%h\", \"status\":\"%>s\", \"uri_path\":\"%U\", \"uri_query\":\"%q\", \"user\":\"%u\"}" splunk_json
 ```
+{% endraw %}
 
 ![](./static/images/Pasted image 20260528120158.png)
 
@@ -45,9 +49,11 @@ Now we will create our config files in `conf-available` folder and then put it i
 
 We need to paste this into the `log-splunk.conf` file and need to comment the **splunk-kv** format
 
+{% raw %}
 ```txt
-<IfModule log_config_module> # # The following directives define some format nicknames for use with # a CustomLog directive (see below). # LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined LogFormat "%h %l %u %t \"%r\" %>s %b" common <IfModule logio_module> # You need to enable mod_logio.c to use %I and %O LogFormat "time=%{%s}t.%{usec_frac}t, bytes_in=%I, bytes_out=%O, cookie=\"%{Cookie}i\", server=%v, dest_port=%p, http_content_type=\"%{Content-type}i\", http_method=\"%m\", http_referrer=\"%{Referer}i\", http_user_agent=\"%{User-agent}i\", ident=\"%l\", response_time_microseconds=%D, client=%h, status=%>s, uri_path=\"%U\", uri_query=\"%q\", user=\"%u\"" splunk_kv #LogFormat "{\"time\":\"%{%s}t.%{usec_frac}t\", \"bytes_in\":\"%I\", \"bytes_out\":\"%O\", \"cookie\":\"%{Cookie}i\", \"server\":\"%v\", \"dest_port\":\"%p\", \"http_content_type\":\"%{Content-type}i\", \"http_method\":\"%m\", \"http_referrer\":\"%{Referer}i\", \"http_user_agent\":\"%{User-agent}i\", \"ident\":\"%l\", \"response_time_microseconds\":\"%D\", \"client\":\"%h\", \"status\":\"%>s\", \"uri_path\":\"%U\", \"uri_query\":\"%q\", \"user\":\"%u\"}" splunk_json #LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" %I %O" combinedio </IfModule> # # The location and format of the access logfile (Common Logfile Format). # If you do not define any access logfiles within a <VirtualHost> # container, they will be logged here. Contrariwise, if you *do* # define per-<VirtualHost> access logfiles, transactions will be # logged therein and *not* in this file. # # CustomLog "logs/access_log" common # # If you prefer a logfile with access, agent, and referer information # (Combined Logfile Format) you can use the following directive. # CustomLog "logs/access_log" splunk_kv #CustomLog "logs/access_log" splunk_json #CustomLog "logs/access_log" combined </IfModule>
+<IfModule log_config_module> # # The following directives define some format nicknames for use with # a CustomLog directive (see below). # LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined LogFormat "%h %l %u %t \"%r\" %>s %b" common <IfModule logio_module> # You need to enable mod_logio.c to use %I and %O LogFormat "time=%{%s}t.%{usec_frac}t, bytes_in=%I, bytes_out=%O, cookie=\"%{Cookie}i\", server=%v, dest_port=%p, http_content_type=\"%{Content-type}i\", http_method=\"%m\", http_referrer=\"%{Referer}i\", http_user_agent=\"%{User-agent}i\", ident=\"%l\", response_time_microseconds=%D, client=%h, status=%>s, uri_path=\"%U\", uri_query=\"%q\", user=\"%u\"" splunk_kv #LogFormat "{\"time\":\"%{%s}t.%{usec_frac}t\", \"bytes_in\":\"%I\", \"bytes_out\":\"%O\", \"cookie\":\"%{Cookie}i\", \"server\":\"%v\", \"dest_port\":\"%p\", \"http_content_type\":\"%{Content-type}i\", \"http_method\":\"%m\", \"http_referrer\":\"%{Referer}i\", \"http_user_agent\":\"%{User-agent}i\", \"ident\":\"%l\", \"response_time_microseconds\":\"%D\", \"client\":\"%h\", \"status\":\"%>s\", \"uri_path\":\"%U\", \"uri_query\":\"%q\", \"user\":\"%u\"}" splunk_json #LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"\" combinedio </IfModule> # # The location and format of the access logfile (Common Logfile Format). # If you do not define any access logfiles within a <VirtualHost> # container, they will be logged here. Contrariwise, if you *do* # define per-<VirtualHost> access logfiles, transactions will be # logged therein and *not* in this file. # # CustomLog "logs/access_log" common # # If you prefer a logfile with access, agent, and referer information # (Combined Logfile Format) you can use the following directive. # CustomLog "logs/access_log" splunk_kv #CustomLog "logs/access_log" splunk_json #CustomLog "logs/access_log" combined </IfModule>
 ```
+{% endraw %}
 
 ![](./static/images/Pasted image 20260528121041.png)
 
