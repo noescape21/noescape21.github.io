@@ -28,14 +28,12 @@ The add-on supports two formats:
 
 ## Apache Log Format
 
-{% raw %}
-```txt
+```conf
 LogFormat "time=%t.%{usec_frac}t, bytes_in=%I, bytes_out=%O, cookie=\"%{Cookie}i\", server=%v, dest_port=%p, http_content_type=\"%{Content-type}i\", http_method=\"%m\", http_referrer=\"%{Referer}i\", http_user_agent=\"%{User-agent}i\", ident=\"%l\", response_time_microseconds=%D, client=%h, status=%>s, uri_path=\"%U\", uri_query=\"%q\", user=\"%u\"" splunk_kv
 
-```txt
+```apache
 #LogFormat "{\"time\":\"%t.%{usec_frac}t\", \"bytes_in\":\"%I\", \"bytes_out\":\"%O\", \"cookie\":\"%{Cookie}i\", \"server\":\"%v\", \"dest_port\":\"%p\", \"http_content_type\":\"%{Content-type}i\", \"http_method\":\"%m\", \"http_referrer\":\"%{Referer}i\", \"http_user_agent\":\"%{User-agent}i\", \"ident\":\"%l\", \"response_time_microseconds\":\"%D\", \"client\":\"%h\", \"status\":\"%>s\", \"uri_path\":\"%U\", \"uri_query\":\"%q\", \"user\":\"%u\"}" splunk_json
 ```
-{% endraw %}
 
 Here iam using the Splunk Json format
 
@@ -56,8 +54,7 @@ sudo nano log-splunk.conf
 
 Paste this into `log-splunk.conf` and comment the `splunk_kv` format if you want to use `splunk_json` instead.
 
-{% raw %}
-```apache
+```conf
 <IfModule log_config_module>
 	# The following directives define some format nicknames for use with
 	# a CustomLog directive (see below).
@@ -86,7 +83,6 @@ Paste this into `log-splunk.conf` and comment the `splunk_kv` format if you want
 	# CustomLog "logs/access_log" combined
 </IfModule>
 ```
-{% endraw %}
 
 ![](../posts/static/images/Pasted%20image%2020260528121041.png)
 
