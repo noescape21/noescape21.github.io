@@ -1,108 +1,140 @@
-###### Onboarding Apache Web Server Logs
+# Onboarding Apache Web Server Logs
 
-![](/posts/static/images/Pasted image 20260527193336.png)
+![](/posts/static/images/Pasted%20image%2020260527193336.png)
 
-- [ ] Here Spidering means making a copy of every page of website.
-- [ ] Scanning = Vulnerability Scanning/ Missing configuration pages etc
+Spidering means making a copy of every page of a website. Scanning means vulnerability scanning or checking for missing configuration pages.
 
-`Task:`
-- [ ] Install Apache Web Servers on Ubuntu Server 
-- [ ] Configure Log Format for Apache
-- [ ] Install the Apache Add-on on the Splunk Host
-- [ ] Need to Configure `inputs.conf` on the UF
+## Task
+
+- Install Apache Web Server on Ubuntu Server
+- Configure log format for Apache
+- Install the Apache Add-on on the Splunk host
+- Configure `inputs.conf` on the UF
 
 ```shell
- sudo apt install apache2
+sudo apt install apache2
 ```
 
-![](/posts/static/images/Pasted image 20260528113545.png)
+![](/posts/static/images/Pasted%20image%2020260528113545.png)
 
-docs reference: https://splunk.github.io/splunk-add-on-for-apache-web-server/Configure/
+Reference: https://splunk.github.io/splunk-add-on-for-apache-web-server/Configure/
 
-There were two log format one is `splunk_kv` and second one is `splunk_json`
+The add-on supports two formats:
 
-https://splunk.github.io/splunk-add-on-for-apache-web-server/Configure/
+- `splunk_kv`
+- `splunk_json`
 
-{% raw %}
-```
+## Apache Log Format
+
+```apache
 LogFormat "time=%{%s}t.%{usec_frac}t, bytes_in=%I, bytes_out=%O, cookie=\"%{Cookie}i\", server=%v, dest_port=%p, http_content_type=\"%{Content-type}i\", http_method=\"%m\", http_referrer=\"%{Referer}i\", http_user_agent=\"%{User-agent}i\", ident=\"%l\", response_time_microseconds=%D, client=%h, status=%>s, uri_path=\"%U\", uri_query=\"%q\", user=\"%u\"" splunk_kv
 ```
-{% endraw %}
 
-{% raw %}
-```
+```apache
 #LogFormat "{\"time\":\"%{%s}t.%{usec_frac}t\", \"bytes_in\":\"%I\", \"bytes_out\":\"%O\", \"cookie\":\"%{Cookie}i\", \"server\":\"%v\", \"dest_port\":\"%p\", \"http_content_type\":\"%{Content-type}i\", \"http_method\":\"%m\", \"http_referrer\":\"%{Referer}i\", \"http_user_agent\":\"%{User-agent}i\", \"ident\":\"%l\", \"response_time_microseconds\":\"%D\", \"client\":\"%h\", \"status\":\"%>s\", \"uri_path\":\"%U\", \"uri_query\":\"%q\", \"user\":\"%u\"}" splunk_json
 ```
-{% endraw %}
 
-![](/posts/static/images/Pasted image 20260528120158.png)
+![](/posts/static/images/Pasted%20image%2020260528120158.png)
 
-![](/posts/static/images/Pasted image 20260528120255.png)
+![](/posts/static/images/Pasted%20image%2020260528120255.png)
 
-This means it will load all the `configurations` files loaded at runtime without overwriting other `conf` files
+This loads the configuration files at runtime without overwriting other `conf` files.
 
-Now we will create our config files in `conf-available` folder and then put it into `conf-enabled` folder.
+## Apache Configuration
+
+Create a config file in `conf-available` and enable it through `conf-enabled`:
 
 ```shell
- sudo nano log-splunk.conf
+sudo nano log-splunk.conf
 ```
 
-We need to paste this into the `log-splunk.conf` file and need to comment the **splunk-kv** format
+Paste this into `log-splunk.conf` and comment the `splunk_kv` format if you want to use `splunk_json` instead.
 
-{% raw %}
-```txt
-<IfModule log_config_module> # # The following directives define some format nicknames for use with # a CustomLog directive (see below). # LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined LogFormat "%h %l %u %t \"%r\" %>s %b" common <IfModule logio_module> # You need to enable mod_logio.c to use %I and %O LogFormat "time=%{%s}t.%{usec_frac}t, bytes_in=%I, bytes_out=%O, cookie=\"%{Cookie}i\", server=%v, dest_port=%p, http_content_type=\"%{Content-type}i\", http_method=\"%m\", http_referrer=\"%{Referer}i\", http_user_agent=\"%{User-agent}i\", ident=\"%l\", response_time_microseconds=%D, client=%h, status=%>s, uri_path=\"%U\", uri_query=\"%q\", user=\"%u\"" splunk_kv #LogFormat "{\"time\":\"%{%s}t.%{usec_frac}t\", \"bytes_in\":\"%I\", \"bytes_out\":\"%O\", \"cookie\":\"%{Cookie}i\", \"server\":\"%v\", \"dest_port\":\"%p\", \"http_content_type\":\"%{Content-type}i\", \"http_method\":\"%m\", \"http_referrer\":\"%{Referer}i\", \"http_user_agent\":\"%{User-agent}i\", \"ident\":\"%l\", \"response_time_microseconds\":\"%D\", \"client\":\"%h\", \"status\":\"%>s\", \"uri_path\":\"%U\", \"uri_query\":\"%q\", \"user\":\"%u\"}" splunk_json #LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"\" combinedio </IfModule> # # The location and format of the access logfile (Common Logfile Format). # If you do not define any access logfiles within a <VirtualHost> # container, they will be logged here. Contrariwise, if you *do* # define per-<VirtualHost> access logfiles, transactions will be # logged therein and *not* in this file. # # CustomLog "logs/access_log" common # # If you prefer a logfile with access, agent, and referer information # (Combined Logfile Format) you can use the following directive. # CustomLog "logs/access_log" splunk_kv #CustomLog "logs/access_log" splunk_json #CustomLog "logs/access_log" combined </IfModule>
+```apache
+<IfModule log_config_module>
+	# The following directives define some format nicknames for use with
+	# a CustomLog directive (see below).
+	LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
+	LogFormat "%h %l %u %t \"%r\" %>s %b" common
+
+	<IfModule logio_module>
+		# You need to enable mod_logio.c to use %I and %O
+		LogFormat "time=%{%s}t.%{usec_frac}t, bytes_in=%I, bytes_out=%O, cookie=\"%{Cookie}i\", server=%v, dest_port=%p, http_content_type=\"%{Content-type}i\", http_method=\"%m\", http_referrer=\"%{Referer}i\", http_user_agent=\"%{User-agent}i\", ident=\"%l\", response_time_microseconds=%D, client=%h, status=%>s, uri_path=\"%U\", uri_query=\"%q\", user=\"%u\"" splunk_kv
+		#LogFormat "{\"time\":\"%{%s}t.%{usec_frac}t\", \"bytes_in\":\"%I\", \"bytes_out\":\"%O\", \"cookie\":\"%{Cookie}i\", \"server\":\"%v\", \"dest_port\":\"%p\", \"http_content_type\":\"%{Content-type}i\", \"http_method\":\"%m\", \"http_referrer\":\"%{Referer}i\", \"http_user_agent\":\"%{User-agent}i\", \"ident\":\"%l\", \"response_time_microseconds\":\"%D\", \"client\":\"%h\", \"status\":\"%>s\", \"uri_path\":\"%U\", \"uri_query\":\"%q\", \"user\":\"%u\"}" splunk_json
+		#LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"\" combinedio
+	</IfModule>
+
+	# The location and format of the access logfile (Common Logfile Format).
+	# If you do not define any access logfiles within a <VirtualHost>
+	# container, they will be logged here. Contrariwise, if you do define
+	# per-<VirtualHost> access logfiles, transactions will be logged therein
+	# and not in this file.
+
+	# CustomLog "logs/access_log" common
+
+	# If you prefer a logfile with access, agent, and referer information
+	# (Combined Logfile Format) you can use the following directive.
+	# CustomLog "logs/access_log" splunk_kv
+	# CustomLog "logs/access_log" splunk_json
+	# CustomLog "logs/access_log" combined
+</IfModule>
 ```
-{% endraw %}
 
-![](/posts/static/images/Pasted image 20260528121041.png)
+![](/posts/static/images/Pasted%20image%2020260528121041.png)
 
-Need to change the path for splunk `.json` for apache2 access log path.
+Change the Apache access log path to the `splunk_json` format.
 
-![](/posts/static/images/Pasted image 20260528122131.png)
-Now we need to specify our splunk  json log format there.
+![](/posts/static/images/Pasted%20image%2020260528122131.png)
 
-![](/posts/static/images/Pasted image 20260528122636.png)
+Now specify the `splunk_json` log format there.
 
-Now we need to enable the configuration. So we will use apache2 config enable command with the log file
+![](/posts/static/images/Pasted%20image%2020260528122636.png)
+
+## Enable the Config
+
+Use `a2enconf` to enable the file:
 
 ```shell
 sudo a2enconf log-splunk
 ```
 
-![](/posts/static/images/Pasted image 20260528122903.png)
+![](/posts/static/images/Pasted%20image%2020260528122903.png)
 
-![](/posts/static/images/Pasted image 20260528123036.png)
+![](/posts/static/images/Pasted%20image%2020260528123036.png)
 
-As we can see here log-splunk file is enabled. Now we need to reload apache2
+The `log-splunk` file is now enabled. Reload Apache:
 
 ```shell
 sudo systemctl reload apache2
 ```
 
-![](/posts/static/images/Pasted image 20260528123336.png)
+![](/posts/static/images/Pasted%20image%2020260528123336.png)
 
-![](/posts/static/images/Pasted image 20260528123522.png)
+![](/posts/static/images/Pasted%20image%2020260528123522.png)
 
-Now we need to install add-on for Splunk UI. Here we need to add splunk website creds to install the app.
+## Splunk Add-on
 
-![](/posts/static/images/Pasted image 20260528123643.png)
+Install the add-on in Splunk UI and provide your Splunk website credentials when prompted.
 
-![](/posts/static/images/Pasted image 20260528125433.png)
+![](/posts/static/images/Pasted%20image%2020260528123643.png)
 
-Now we need to add `inputs.conf` for shipping the logs.
+![](/posts/static/images/Pasted%20image%2020260528125433.png)
 
-![](/posts/static/images/Pasted image 20260528125555.png)
+## inputs.conf
 
-As we can see here we don't have any folder related to `apache2` so we need to create one.
+Add `inputs.conf` for shipping the logs.
 
-```shell
+![](/posts/static/images/Pasted%20image%2020260528125555.png)
+
+If there is no `apache2` folder yet, create this structure:
+
+```text
 apache_inputs > default > inputs.conf
 ```
 
-![](/posts/static/images/Pasted image 20260528132606.png)
+![](/posts/static/images/Pasted%20image%2020260528132606.png)
 
-We need to add this in `inputs.conf`
+Add this to `inputs.conf`:
 
 ```conf
 [monitor:///var/log/apache2/access.log]
@@ -111,17 +143,21 @@ index = test
 disabled = 0
 ```
 
-![](/posts/static/images/Pasted image 20260528130457.png) As `outpus.conf` is already configured.
+![](/posts/static/images/Pasted%20image%2020260528130457.png)
 
-Now we need to restart splunk to implement the changes.
+`outputs.conf` is already configured.
+
+## Restart Splunk Forwarder
+
+Restart Splunk to apply the changes:
 
 ```shell
 sudo /opt/splunkforwarder/bin/splunk restart
 ```
 
-![](/posts/static/images/Pasted image 20260528130644.png)
+![](/posts/static/images/Pasted%20image%2020260528130644.png)
 
-![](/posts/static/images/Pasted image 20260528132714.png)
+![](/posts/static/images/Pasted%20image%2020260528132714.png)
 
 
 
