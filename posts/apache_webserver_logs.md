@@ -1,6 +1,6 @@
 ###### Onboarding Apache Web Server Logs
 
-![](./static/images/Pasted image 20260527193336.png)
+![](/posts/static/images/Pasted image 20260527193336.png)
 
 - [ ] Here Spidering means making a copy of every page of website.
 - [ ] Scanning = Vulnerability Scanning/ Missing configuration pages etc
@@ -15,7 +15,7 @@
  sudo apt install apache2
 ```
 
-![](./static/images/Pasted image 20260528113545.png)
+![](/posts/static/images/Pasted image 20260528113545.png)
 
 docs reference: https://splunk.github.io/splunk-add-on-for-apache-web-server/Configure/
 
@@ -35,9 +35,9 @@ LogFormat "time=%{%s}t.%{usec_frac}t, bytes_in=%I, bytes_out=%O, cookie=\"%{Cook
 ```
 {% endraw %}
 
-![](./static/images/Pasted image 20260528120158.png)
+![](/posts/static/images/Pasted image 20260528120158.png)
 
-![](./static/images/Pasted image 20260528120255.png)
+![](/posts/static/images/Pasted image 20260528120255.png)
 
 This means it will load all the `configurations` files loaded at runtime without overwriting other `conf` files
 
@@ -55,14 +55,14 @@ We need to paste this into the `log-splunk.conf` file and need to comment the **
 ```
 {% endraw %}
 
-![](./static/images/Pasted image 20260528121041.png)
+![](/posts/static/images/Pasted image 20260528121041.png)
 
 Need to change the path for splunk `.json` for apache2 access log path.
 
-![](./static/images/Pasted image 20260528122131.png)
+![](/posts/static/images/Pasted image 20260528122131.png)
 Now we need to specify our splunk  json log format there.
 
-![](./static/images/Pasted image 20260528122636.png)
+![](/posts/static/images/Pasted image 20260528122636.png)
 
 Now we need to enable the configuration. So we will use apache2 config enable command with the log file
 
@@ -70,9 +70,9 @@ Now we need to enable the configuration. So we will use apache2 config enable co
 sudo a2enconf log-splunk
 ```
 
-![](./static/images/Pasted image 20260528122903.png)
+![](/posts/static/images/Pasted image 20260528122903.png)
 
-![](./static/images/Pasted image 20260528123036.png)
+![](/posts/static/images/Pasted image 20260528123036.png)
 
 As we can see here log-splunk file is enabled. Now we need to reload apache2
 
@@ -80,19 +80,19 @@ As we can see here log-splunk file is enabled. Now we need to reload apache2
 sudo systemctl reload apache2
 ```
 
-![](./static/images/Pasted image 20260528123336.png)
+![](/posts/static/images/Pasted image 20260528123336.png)
 
-![](./static/images/Pasted image 20260528123522.png)
+![](/posts/static/images/Pasted image 20260528123522.png)
 
 Now we need to install add-on for Splunk UI. Here we need to add splunk website creds to install the app.
 
-![](./static/images/Pasted image 20260528123643.png)
+![](/posts/static/images/Pasted image 20260528123643.png)
 
-![](./static/images/Pasted image 20260528125433.png)
+![](/posts/static/images/Pasted image 20260528125433.png)
 
 Now we need to add `inputs.conf` for shipping the logs.
 
-![](./static/images/Pasted image 20260528125555.png)
+![](/posts/static/images/Pasted image 20260528125555.png)
 
 As we can see here we don't have any folder related to `apache2` so we need to create one.
 
@@ -100,7 +100,7 @@ As we can see here we don't have any folder related to `apache2` so we need to c
 apache_inputs > default > inputs.conf
 ```
 
-![](./static/images/Pasted image 20260528132606.png)
+![](/posts/static/images/Pasted image 20260528132606.png)
 
 We need to add this in `inputs.conf`
 
@@ -111,7 +111,7 @@ index = test
 disabled = 0
 ```
 
-![](./static/images/Pasted image 20260528130457.png) As `outpus.conf` is already configured.
+![](/posts/static/images/Pasted image 20260528130457.png) As `outpus.conf` is already configured.
 
 Now we need to restart splunk to implement the changes.
 
@@ -119,9 +119,9 @@ Now we need to restart splunk to implement the changes.
 sudo /opt/splunkforwarder/bin/splunk restart
 ```
 
-![](./static/images/Pasted image 20260528130644.png)
+![](/posts/static/images/Pasted image 20260528130644.png)
 
-![](./static/images/Pasted image 20260528132714.png)
+![](/posts/static/images/Pasted image 20260528132714.png)
 
 
 
