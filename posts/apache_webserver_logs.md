@@ -1,6 +1,6 @@
 # Onboarding Apache Web Server Logs
 
-![](/posts/static/images/Pasted%20image%2020260527193336.png)
+![](../posts/static/images/Pasted%20image%2020260527193336.png)
 
 Spidering means making a copy of every page of a website. Scanning means vulnerability scanning or checking for missing configuration pages.
 
@@ -15,7 +15,7 @@ Spidering means making a copy of every page of a website. Scanning means vulnera
 sudo apt install apache2
 ```
 
-![](/posts/static/images/Pasted%20image%2020260528113545.png)
+![](../posts/static/images/Pasted%20image%2020260528113545.png)
 
 Reference: https://splunk.github.io/splunk-add-on-for-apache-web-server/Configure/
 
@@ -26,6 +26,7 @@ The add-on supports two formats:
 
 ## Apache Log Format
 
+{% raw %}
 ```apache
 LogFormat "time=%{%s}t.%{usec_frac}t, bytes_in=%I, bytes_out=%O, cookie=\"%{Cookie}i\", server=%v, dest_port=%p, http_content_type=\"%{Content-type}i\", http_method=\"%m\", http_referrer=\"%{Referer}i\", http_user_agent=\"%{User-agent}i\", ident=\"%l\", response_time_microseconds=%D, client=%h, status=%>s, uri_path=\"%U\", uri_query=\"%q\", user=\"%u\"" splunk_kv
 ```
@@ -33,10 +34,11 @@ LogFormat "time=%{%s}t.%{usec_frac}t, bytes_in=%I, bytes_out=%O, cookie=\"%{Cook
 ```apache
 #LogFormat "{\"time\":\"%{%s}t.%{usec_frac}t\", \"bytes_in\":\"%I\", \"bytes_out\":\"%O\", \"cookie\":\"%{Cookie}i\", \"server\":\"%v\", \"dest_port\":\"%p\", \"http_content_type\":\"%{Content-type}i\", \"http_method\":\"%m\", \"http_referrer\":\"%{Referer}i\", \"http_user_agent\":\"%{User-agent}i\", \"ident\":\"%l\", \"response_time_microseconds\":\"%D\", \"client\":\"%h\", \"status\":\"%>s\", \"uri_path\":\"%U\", \"uri_query\":\"%q\", \"user\":\"%u\"}" splunk_json
 ```
+{% endraw %}
 
-![](/posts/static/images/Pasted%20image%2020260528120158.png)
+![](../posts/static/images/Pasted%20image%2020260528120158.png)
 
-![](/posts/static/images/Pasted%20image%2020260528120255.png)
+![](../posts/static/images/Pasted%20image%2020260528120255.png)
 
 This loads the configuration files at runtime without overwriting other `conf` files.
 
@@ -79,16 +81,17 @@ Paste this into `log-splunk.conf` and comment the `splunk_kv` format if you want
 	# CustomLog "logs/access_log" combined
 </IfModule>
 ```
+{% endraw %}
 
-![](/posts/static/images/Pasted%20image%2020260528121041.png)
+![](../posts/static/images/Pasted%20image%2020260528121041.png)
 
 Change the Apache access log path to the `splunk_json` format.
 
-![](/posts/static/images/Pasted%20image%2020260528122131.png)
+![](../posts/static/images/Pasted%20image%2020260528122131.png)
 
 Now specify the `splunk_json` log format there.
 
-![](/posts/static/images/Pasted%20image%2020260528122636.png)
+![](../posts/static/images/Pasted%20image%2020260528122636.png)
 
 ## Enable the Config
 
@@ -98,9 +101,9 @@ Use `a2enconf` to enable the file:
 sudo a2enconf log-splunk
 ```
 
-![](/posts/static/images/Pasted%20image%2020260528122903.png)
+![](../posts/static/images/Pasted%20image%2020260528122903.png)
 
-![](/posts/static/images/Pasted%20image%2020260528123036.png)
+![](../posts/static/images/Pasted%20image%2020260528123036.png)
 
 The `log-splunk` file is now enabled. Reload Apache:
 
@@ -108,23 +111,23 @@ The `log-splunk` file is now enabled. Reload Apache:
 sudo systemctl reload apache2
 ```
 
-![](/posts/static/images/Pasted%20image%2020260528123336.png)
+![](../posts/static/images/Pasted%20image%2020260528123336.png)
 
-![](/posts/static/images/Pasted%20image%2020260528123522.png)
+![](../posts/static/images/Pasted%20image%2020260528123522.png)
 
 ## Splunk Add-on
 
 Install the add-on in Splunk UI and provide your Splunk website credentials when prompted.
 
-![](/posts/static/images/Pasted%20image%2020260528123643.png)
+![](../posts/static/images/Pasted%20image%2020260528123643.png)
 
-![](/posts/static/images/Pasted%20image%2020260528125433.png)
+![](../posts/static/images/Pasted%20image%2020260528125433.png)
 
 ## inputs.conf
 
 Add `inputs.conf` for shipping the logs.
 
-![](/posts/static/images/Pasted%20image%2020260528125555.png)
+![](../posts/static/images/Pasted%20image%2020260528125555.png)
 
 If there is no `apache2` folder yet, create this structure:
 
@@ -132,7 +135,7 @@ If there is no `apache2` folder yet, create this structure:
 apache_inputs > default > inputs.conf
 ```
 
-![](/posts/static/images/Pasted%20image%2020260528132606.png)
+![](../posts/static/images/Pasted%20image%2020260528132606.png)
 
 Add this to `inputs.conf`:
 
@@ -143,7 +146,7 @@ index = test
 disabled = 0
 ```
 
-![](/posts/static/images/Pasted%20image%2020260528130457.png)
+![](../posts/static/images/Pasted%20image%2020260528130457.png)
 
 `outputs.conf` is already configured.
 
@@ -155,9 +158,9 @@ Restart Splunk to apply the changes:
 sudo /opt/splunkforwarder/bin/splunk restart
 ```
 
-![](/posts/static/images/Pasted%20image%2020260528130644.png)
+![](../posts/static/images/Pasted%20image%2020260528130644.png)
 
-![](/posts/static/images/Pasted%20image%2020260528132714.png)
+![](../posts/static/images/Pasted%20image%2020260528132714.png)
 
 
 
