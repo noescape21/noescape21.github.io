@@ -52,6 +52,7 @@ sudo nano log-splunk.conf
 
 Paste this into `log-splunk.conf` and comment the `splunk_kv` format if you want to use `splunk_json` instead.
 
+{% raw %}
 ```apache
 <IfModule log_config_module>
 	# The following directives define some format nicknames for use with
