@@ -101,8 +101,10 @@
     ];
 
     const BLOG_POSTS = [
-      { id: 1, title: "Onboarding Apache Web Server Logs in Splunk", date: "May 28, 2026", readTime: "5 min read", file: "posts/apache_webserver_logs.md" },
+      { id: 1, title: "Onboarding Apache Web Server Logs in Splunk", date: "May 28, 2026", readTime: "5 min read", file: "posts/apache_webserver_logs.md", slug: "apache-webserver-logs" },
     ];
+
+    const getPostUrl = (post) => `/posts/${post.slug}.html`;
 
     const LINKS = [
       {
@@ -167,6 +169,24 @@
             .catch(() => setPostContent('<p class="text-red-400">Error loading post. Are you running this on a server?</p>'));
         }
       }, [selectedPost]);
+
+      // Sync from hash on load so /#blog/<slug> opens the post
+      useEffect(() => {
+        function syncFromHash() {
+          const h = (location.hash || '').replace(/^#/, '');
+          if (h.startsWith('blog/')) {
+            const slug = h.split('/')[1];
+            const post = BLOG_POSTS.find(p => p.slug === slug);
+            if (post) {
+              setActiveTab('blog');
+              setSelectedPost(post);
+            }
+          }
+        }
+        syncFromHash();
+        window.addEventListener('hashchange', syncFromHash);
+        return () => window.removeEventListener('hashchange', syncFromHash);
+      }, []);
 
       const navLink = (tab, label) => (
         <button
@@ -290,14 +310,14 @@
                   ) : (
                     <div className="space-y-6 mt-4">
                       {BLOG_POSTS.map((post) => (
-                        <article key={post.id} className="group cursor-pointer block" onClick={() => setSelectedPost(post)}>
+                        <a key={post.id} href={getPostUrl(post)} className="group block">
                           <p className="text-xs font-mono text-gray-500 mb-3 flex items-center space-x-3 tracking-wide">
                             <span>{post.date}</span>
                             <span className="text-gray-700">|</span>
                             <span>{post.readTime}</span>
                           </p>
                           <h3 className="text-2xl font-medium text-gray-200 group-hover:text-emerald-400 transition-colors leading-tight">{post.title}</h3>
-                        </article>
+                        </a>
                       ))}
                     </div>
                   )}
