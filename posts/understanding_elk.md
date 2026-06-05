@@ -18,41 +18,41 @@
 
 ### Installing Latest Ubuntu Server:
 
-![](../posts/static/images/Pasted image 20260117174953.png)
+![](../posts/static/images/Pasted%20image%2020260117174953.png)
 
 
 Installing SSH-server:
 
-![](../posts/static/images/Pasted image 20260117175012.png)
+![](../posts/static/images/Pasted%20image%2020260117175012.png)
 
 First we need to install `openjdk`
 
 `sudo apt-get install openjdk-8-jre`
 
-![](../posts/static/images/Pasted image 20260117175113.png)
+![](../posts/static/images/Pasted%20image%2020260117175113.png)
 
 ### Installing Elasticsearch:
 
-![](../posts/static/images/Pasted image 20260117175418.png)
+![](../posts/static/images/Pasted%20image%2020260117175418.png)
 
-![](../posts/static/images/Pasted image 20260117175430.png)
+![](../posts/static/images/Pasted%20image%2020260117175430.png)
 
 `sudo dpkg -i elasticsearch-9.2.4-amd64.deb`
 
-![](../posts/static/images/Pasted image 20260117180132.png)
+![](../posts/static/images/Pasted%20image%2020260117180132.png)
 
 Enabling Elasticsearch service
 
 `sudo /bin/systemctl enable elasticsearch.service`
 
-![](../posts/static/images/Pasted image 20260117180312.png)
+![](../posts/static/images/Pasted%20image%2020260117180312.png)
 
 Starting Elasticsearch:
 `sudo systemctl start elasticsearch.service`
 
-![](../posts/static/images/Pasted image 20260117180452.png)
+![](../posts/static/images/Pasted%20image%2020260117180452.png)
 
-![](../posts/static/images/Pasted image 20260117180621.png)
+![](../posts/static/images/Pasted%20image%2020260117180621.png)
 
 Testing Elasticsearch its running or not without any additional component.
 
@@ -61,11 +61,11 @@ Resetting Password of Elasticsearch:
 
 	Elasticsearch Password: `l1xKw1SQbg0W7rpCuEAR`
 
-![](../posts/static/images/Pasted image 20260117181424.png)
+![](../posts/static/images/Pasted%20image%2020260117181424.png)
 
 `curl -k -u elastic https://localhost:9200`
 
-![](../posts/static/images/Pasted image 20260117181507.png)
+![](../posts/static/images/Pasted%20image%2020260117181507.png)
 
 If this command is running then we can say Elasticsearch is successfully running and installed on the server.
 
@@ -73,16 +73,16 @@ If this command is running then we can say Elasticsearch is successfully running
 
 Need to download from elastic website.
 
-![](../posts/static/images/Pasted image 20260117182121.png)
+![](../posts/static/images/Pasted%20image%2020260117182121.png)
 
-![](../posts/static/images/Pasted image 20260117182210.png)
+![](../posts/static/images/Pasted%20image%2020260117182210.png)
 
 `sudo dpkg -i logstash-9.2.4-amd64.deb`
 `sudo /bin/systemctl daemon-reload`
 `sudo systemctl enable logstash.service`
 `sudo systemctl start logstash.service`
 
-![](../posts/static/images/Pasted image 20260117184120.png)
+![](../posts/static/images/Pasted%20image%2020260117184120.png)
 
 Changing some of the Logstash Configs:
 
@@ -90,39 +90,39 @@ By default they are at
 
 `ls /etc/logstash/`
 
-![](../posts/static/images/Pasted image 20260117184343.png)
+![](../posts/static/images/Pasted%20image%2020260117184343.png)
 
 Need to make this `true:`
 
-![](../posts/static/images/Pasted image 20260117184854.png)
+![](../posts/static/images/Pasted%20image%2020260117184854.png)
 
 Enable this:
 
-![](../posts/static/images/Pasted image 20260117185038.png)
+![](../posts/static/images/Pasted%20image%2020260117185038.png)
 
 Now we need to restart Logstash: `sudo systemctl restart logstash.service`
 
 ### Installing Kibana:
 
-![](../posts/static/images/Pasted image 20260117185323.png)
+![](../posts/static/images/Pasted%20image%2020260117185323.png)
 
 Same steps did earlier:
 
-![](../posts/static/images/Pasted image 20260117190255.png)
+![](../posts/static/images/Pasted%20image%2020260117190255.png)
 Main Config File:
 
 `sudo nano /etc/kibana/kibana.yml`
 
-![](../posts/static/images/Pasted image 20260117190717.png)
+![](../posts/static/images/Pasted%20image%2020260117190717.png)
 Here need to enable because Elasticsearch is listening on same port and localhost because listening on same machine.
 
-![](../posts/static/images/Pasted image 20260117191001.png)
+![](../posts/static/images/Pasted%20image%2020260117191001.png)
 
 Need to add IP address of the machine so that i can access the Kibana from My Host browser as server don't have GUI.
 
 As Kibana Listens on port 5601. I will try to access that from my browser.
 
-![](../posts/static/images/Pasted image 20260117191225.png)
+![](../posts/static/images/Pasted%20image%2020260117191225.png)
 
 Here are the commands for Configuration:
 
@@ -132,25 +132,25 @@ then its asks for verification code:
 
 `sudo ./kibana-verification-code` we will get this `/usr/share/kibana/bin`
 
-![](../posts/static/images/Pasted image 20260117191721.png)
+![](../posts/static/images/Pasted%20image%2020260117191721.png)
 
 As now we are in:
 
-![](../posts/static/images/Pasted image 20260117191826.png)
+![](../posts/static/images/Pasted%20image%2020260117191826.png)
 
 ### Indexing and Searching Data in ES:
 
 Difference Between Relational DB & Elasticsearch:
 
-![](../posts/static/images/Pasted image 20260117202418.png)
+![](../posts/static/images/Pasted%20image%2020260117202418.png)
 
 **Indexes:**
 
-![](../posts/static/images/Pasted image 20260117210230.png)
+![](../posts/static/images/Pasted%20image%2020260117210230.png)
 
 **Documents:**
 
-![](../posts/static/images/Pasted image 20260117210356.png)
+![](../posts/static/images/Pasted%20image%2020260117210356.png)
 
 ### Basics of CRUD: Create, Read, Update, Delete:
 
@@ -183,7 +183,7 @@ As now data is added in elasticsearch now we will try to get that data using
 GET /athletes/_doc/1
 ```
 
-![](../posts/static/images/Pasted image 20260117230125.png)
+![](../posts/static/images/Pasted%20image%2020260117230125.png)
 
 Actual Document we can get in `_source` 
 
@@ -191,19 +191,19 @@ Actual Document we can get in `_source`
 
 Here Elasticsearch is different from other databases, we can not update the data we need to replace it as shown below:
 
-![](../posts/static/images/Pasted image 20260117231347.png)
+![](../posts/static/images/Pasted%20image%2020260117231347.png)
 
 As we can see that the results have been updated.
 
-![](../posts/static/images/Pasted image 20260117231430.png)
+![](../posts/static/images/Pasted%20image%2020260117231430.png)
 
 Before Updating Data:
 
-![](../posts/static/images/Pasted image 20260117231531.png)
+![](../posts/static/images/Pasted%20image%2020260117231531.png)
 
 After Updating:
 
-![](../posts/static/images/Pasted image 20260117231621.png)
+![](../posts/static/images/Pasted%20image%2020260117231621.png)
 
 As we can see here `version` has been updated after updating the data as shown above.
 
@@ -218,21 +218,21 @@ POST /athletes/_update/1
 }
 ```
 
-![](../posts/static/images/Pasted image 20260117232615.png)
+![](../posts/static/images/Pasted%20image%2020260117232615.png)
 
 As we can see number has been changed successfully.
 
-![](../posts/static/images/Pasted image 20260117232642.png)
+![](../posts/static/images/Pasted%20image%2020260117232642.png)
 
 #### Deleting Data:
 
 We can delete the data using `DELETE /index/type/id`
 
-![](../posts/static/images/Pasted image 20260118000241.png)
+![](../posts/static/images/Pasted%20image%2020260118000241.png)
 
 After Deleting:
 
-![](../posts/static/images/Pasted image 20260118000349.png)
+![](../posts/static/images/Pasted%20image%2020260118000349.png)
 
 #### Finding Number of Available Indexes?
 
@@ -240,20 +240,20 @@ After Deleting:
 
 yellow = indexes
 
-![](../posts/static/images/Pasted image 20260118001120.png)
+![](../posts/static/images/Pasted%20image%2020260118001120.png)
 
 accessing this using **CURL:**
 ` curl -k -u elastic https://localhost:9200/students/_doc/21?pretty`
 
-![](../posts/static/images/Pasted image 20260118001756.png)
+![](../posts/static/images/Pasted%20image%2020260118001756.png)
 
 #### How Searching Data in ES Works:
 
 Difference Between Query and Filter:
 
-![](../posts/static/images/Pasted image 20260118131348.png)
+![](../posts/static/images/Pasted%20image%2020260118131348.png)
 
-![](../posts/static/images/Pasted image 20260118132240.png)
+![](../posts/static/images/Pasted%20image%2020260118132240.png)
 
 #### Adding Bulk Data using Postman:
 
@@ -293,7 +293,7 @@ Here Iam unable to add bulk data using DEV Tools so i used postman. Below is the
 {"last_name":"adebayo","first_name":"bam","position":"pf","number":"13","team":"miami","college":"kentucky","ppg":9}
 ```
 
-![](../posts/static/images/Pasted image 20260118185931.png)
+![](../posts/static/images/Pasted%20image%2020260118185931.png)
 
 For fetching all the data from an index in elastic search we need to use this query.
 
@@ -312,7 +312,7 @@ GET basketball/_search
 ```
 	
 
-![](../posts/static/images/Pasted image 20260118190110.png)
+![](../posts/static/images/Pasted%20image%2020260118190110.png)
 
 Query for matching specific fields as shown below.
 
@@ -327,7 +327,7 @@ GET /students/_search
 }
 ```
 
-![](../posts/static/images/Pasted image 20260118190346.png)
+![](../posts/static/images/Pasted%20image%2020260118190346.png)
 
 Query for searching multiple entities:
 
@@ -353,7 +353,7 @@ GET /students/_search
 }
 ```
 
-![](../posts/static/images/Pasted image 20260118192407.png)
+![](../posts/static/images/Pasted%20image%2020260118192407.png)
 
 Example for using `must_not`
 
@@ -401,7 +401,7 @@ GET /students/_search
 }
 ```
 
-![](../posts/static/images/Pasted image 20260118201007.png)
+![](../posts/static/images/Pasted%20image%2020260118201007.png)
 
 ##### Aggregating ES Data:
 
@@ -413,22 +413,22 @@ There are two types of **Aggregations:**
 
 It is based on values like `college, windows etc`.
 
-![](../posts/static/images/Pasted image 20260201150033.png)
+![](../posts/static/images/Pasted%20image%2020260201150033.png)
 
 In **Bucket Aggregation** we place these things in buckets, looking in unique fields like color and placing/sorting them into buckets using unique characters.
 Examples:
 
 Shows how can we count specific fields.
  
-![](../posts/static/images/Pasted image 20260201152911.png)
+![](../posts/static/images/Pasted%20image%2020260201152911.png)
 
-![](../posts/static/images/Pasted image 20260201161430.png)
+![](../posts/static/images/Pasted%20image%2020260201161430.png)
 
 Here we created new field **good colleges** like need to get a list of number of students in college based on there count like number of students in `a` college and then number of students in `b` college it will sort the result. as above.
 
 Sort in Ascending Order:
 
-![](../posts/static/images/Pasted image 20260201165416.png)
+![](../posts/static/images/Pasted%20image%2020260201165416.png)
 
 ```json
 Get athletes/_search
@@ -463,17 +463,17 @@ Get athletes/_search
 
 It based on `numeric values`.Nested inside a Nested like `averege` points per game as shown below. 
 
-![](../posts/static/images/Pasted image 20260201181750.png)
+![](../posts/static/images/Pasted%20image%2020260201181750.png)
 
 Other examples like `max` points and `min` points:
 
-![](../posts/static/images/Pasted image 20260201181936.png)
+![](../posts/static/images/Pasted%20image%2020260201181936.png)
 
-![](../posts/static/images/Pasted image 20260201182017.png)
+![](../posts/static/images/Pasted%20image%2020260201182017.png)
 
 `Stats:` shows all max, min, avg, sum and count.
 
-![](../posts/static/images/Pasted image 20260201182212.png)
+![](../posts/static/images/Pasted%20image%2020260201182212.png)
 
 ##### Making an Custom Index with custom data type:
 
@@ -511,15 +511,15 @@ PUT dfir
 
 Dynamic Mapping is default and we can feed any data we want in that.
 
-![](../posts/static/images/Pasted image 20260201193243.png)
+![](../posts/static/images/Pasted%20image%2020260201193243.png)
 
 But in Explicit Mapping we need to defined what data is inserted.
 
-![](../posts/static/images/Pasted image 20260201193438.png)
+![](../posts/static/images/Pasted%20image%2020260201193438.png)
 
-![](../posts/static/images/Pasted image 20260201194332.png)
+![](../posts/static/images/Pasted%20image%2020260201194332.png)
 
-![](../posts/static/images/Pasted image 20260201195420.png)
+![](../posts/static/images/Pasted%20image%2020260201195420.png)
 
 Here is the Example:
 
@@ -553,9 +553,9 @@ Check for index mapping by GET `index_name`
 GET dfir
 ```
 
-![](../posts/static/images/Pasted image 20260201195718.png)
+![](../posts/static/images/Pasted%20image%2020260201195718.png)
 
-![](../posts/static/images/Pasted image 20260201195738.png)
+![](../posts/static/images/Pasted%20image%2020260201195738.png)
 
 Here is the information about the mapping we set and This is an Example of Dynamic Mapping.
 
@@ -850,16 +850,16 @@ references: https://www.elastic.co/docs/reference/elasticsearch/mapping-referenc
 
 #### Logstash Input: #logstash
 
-![](../posts/static/images/Pasted image 20260206161840.png)
+![](../posts/static/images/Pasted%20image%2020260206161840.png)
 
 What is Logstash Pipeline:
 
 A **pipeline** where data get **input**, **filters** and **outputs** as shown below.
 
-![](../posts/static/images/Pasted image 20260206162139.png)
+![](../posts/static/images/Pasted%20image%2020260206162139.png)
 
 #### Getting Data into Logstash:
- ![](../posts/static/images/Pasted image 20260206184541.png)
+ ![](../posts/static/images/Pasted%20image%2020260206184541.png)
 
 Reference: https://www.elastic.co/docs/reference/logstash/plugins/input-plugins
 
@@ -867,15 +867,15 @@ Location for Logstash Binary:
 
 Here Logstash binary exists. We can run it manually.
 
-![](../posts/static/images/Pasted image 20260206185101.png)
+![](../posts/static/images/Pasted%20image%2020260206185101.png)
 
 Here we can make our custom configurations. like `template.conf`
 
-![](../posts/static/images/Pasted image 20260206185309.png)
+![](../posts/static/images/Pasted%20image%2020260206185309.png)
 ##### Custom Config File:
 
 In Logstash we always and only have these three things input, filter and output. Filter is always required. 
-![](../posts/static/images/Pasted image 20260206185622.png)
+![](../posts/static/images/Pasted%20image%2020260206185622.png)
 
 If we want that Logstash will use our configuration we need to place that in **conf.d** directory so after every three 3 according to our set time interval Logstash will read these configurations.
 
@@ -883,21 +883,21 @@ If we want that Logstash will use our configuration we need to place that in **c
 
 In output section we will sends all our logs to elastic search as shown below.
  
-![](../posts/static/images/Pasted image 20260206191156.png)
+![](../posts/static/images/Pasted%20image%2020260206191156.png)
 
 For the input we can see what plugin we need to use from elastic input plugins here i used the file and check for its requirements here it only required only file path and i used start position to get logs from the start.
 
-![](../posts/static/images/Pasted image 20260206192911.png)
+![](../posts/static/images/Pasted%20image%2020260206192911.png)
 
 and then we moved our file to **conf.d**
 
-![](../posts/static/images/Pasted image 20260206193044.png)
+![](../posts/static/images/Pasted%20image%2020260206193044.png)
 
 Now we need to check logs for Logstash to confirm our configuration is working fine or not.
 
 Location: `/var/log/logstash/logstash-plain.log`
 
-![](../posts/static/images/Pasted image 20260206193226.png)
+![](../posts/static/images/Pasted%20image%2020260206193226.png)
 
 But first we need to make an `conf` file in which we can add our elastic credentials so that Logstash will communicate with elastic here is an config file and here the plugin i used in `file plugin`.
 
@@ -927,15 +927,15 @@ output {
 ```
 
 
-![](../posts/static/images/Pasted image 20260206194857.png)
+![](../posts/static/images/Pasted%20image%2020260206194857.png)
 
 ` sudo usermod -a -G adm logstash` used this to give Logstash permissions.
 
 Then our data started landing.
 
-![](../posts/static/images/Pasted image 20260206231443.png)
+![](../posts/static/images/Pasted%20image%2020260206231443.png)
 
-![](../posts/static/images/Pasted image 20260206222617.png)
+![](../posts/static/images/Pasted%20image%2020260206222617.png)
 
 ###### Using UDP Plugin:
 
@@ -974,12 +974,12 @@ for example: sudo fprobe -i eth0 192.168.79.150:18001
 
 Now every type of data i created send to this ip where tcpdump is listening.
 
-![](../posts/static/images/Pasted image 20260206231316.png)
+![](../posts/static/images/Pasted%20image%2020260206231316.png)
 
-![](../posts/static/images/Pasted image 20260206231324.png)
+![](../posts/static/images/Pasted%20image%2020260206231324.png)
 here our data lands in `logstash`
 
-![](../posts/static/images/Pasted image 20260206231357.png)
+![](../posts/static/images/Pasted%20image%2020260206231357.png)
 
 ##### Configuring Windows Beats Plugin:
 
@@ -1007,17 +1007,17 @@ elasticsearch {
 
 Documentation: https://www.elastic.co/docs/reference/logstash/plugins/plugins-inputs-beats
 
-![](../posts/static/images/Pasted image 20260207110537.png)
+![](../posts/static/images/Pasted%20image%2020260207110537.png)
 
 As we can see here listener is started Listening on port `5044` as shown above.
 
 Need to Download Zip file from WinLogBeat:
 
-![](../posts/static/images/Pasted image 20260207112843.png)
+![](../posts/static/images/Pasted%20image%2020260207112843.png)
 
 Now Saving and Renaming the file into out Windows Box:
 
-![](../posts/static/images/Pasted image 20260207113108.png)
+![](../posts/static/images/Pasted%20image%2020260207113108.png)
 
 Now we need a `configuration file` to install it as a service.
 
@@ -1025,30 +1025,30 @@ Location: `C:\Program Files\Winlogbeat\winlogbeat.yml`
 
 Logs we need:
 
-![](../posts/static/images/Pasted image 20260207113949.png)
+![](../posts/static/images/Pasted%20image%2020260207113949.png)
 
 Sending Data to out Logstash:
 
-![](../posts/static/images/Pasted image 20260207114017.png)
+![](../posts/static/images/Pasted%20image%2020260207114017.png)
 
-![](../posts/static/images/Pasted image 20260207114031.png)
+![](../posts/static/images/Pasted%20image%2020260207114031.png)
 
 Testing our configuration:
 
 ` .\winlogbeat.exe -c .\winlogbeat.yml test config -e`
 
-![](../posts/static/images/Pasted image 20260207114624.png)
+![](../posts/static/images/Pasted%20image%2020260207114624.png)
 
 As we can see service in `installed` and in `stopped` state.
-![](../posts/static/images/Pasted image 20260207115242.png)
+![](../posts/static/images/Pasted%20image%2020260207115242.png)
 
 ` Start-Service winlogbeat` use this command to start the service.
 
-![](../posts/static/images/Pasted image 20260207121130.png)
+![](../posts/static/images/Pasted%20image%2020260207121130.png)
 
 Lets check for incoming data here first we have our Kibana IP and second one in Windows Box and data is coming as shown above.
 
-![](../posts/static/images/Pasted image 20260207121331.png)
+![](../posts/static/images/Pasted%20image%2020260207121331.png)
 
 ##### Logstash Filtering:
 
@@ -1091,7 +1091,7 @@ sincedb_path => "/dev/null": used to ask Logstash rereads file every time.
 
 And as we can see all our data is coming in one field that we need to fix.
  
-![](../posts/static/images/Pasted image 20260207130606.png)
+![](../posts/static/images/Pasted%20image%2020260207130606.png)
 
 Documentation: https://www.elastic.co/docs/reference/logstash/plugins/filter-plugins
 
@@ -1108,7 +1108,7 @@ PUT /_cluster/settings
 
 Now `DELETE *` Works
 
-![](../posts/static/images/Pasted image 20260207133219.png)
+![](../posts/static/images/Pasted%20image%2020260207133219.png)
 
 ```json
 filter {
@@ -1121,7 +1121,7 @@ filter {
 
 This is how we can assign custom name to our data as shown above.
 
-![](../posts/static/images/Pasted image 20260207143208.png)
+![](../posts/static/images/Pasted%20image%2020260207143208.png)
 
 ###### Removing an Unwanted Field:
 
@@ -1130,28 +1130,28 @@ ref: https://www.elastic.co/docs/reference/logstash/plugins/plugins-filters-muta
 
 Let remove the message field and restart Logstash
 
-![](../posts/static/images/Pasted image 20260207144906.png)
+![](../posts/static/images/Pasted%20image%2020260207144906.png)
 
 and see there is no `message` field
 
-![](../posts/static/images/Pasted image 20260207145045.png)
+![](../posts/static/images/Pasted%20image%2020260207145045.png)
 
 As here we have two timestamps we will fix this and replace the UNIX one with the original one using the `date` plugin.
 
-![](../posts/static/images/Pasted image 20260207145254.png)
+![](../posts/static/images/Pasted%20image%2020260207145254.png)
 
 using `UNIX_MS` to parse our time
 
-![](../posts/static/images/Pasted image 20260207145532.png)
+![](../posts/static/images/Pasted%20image%2020260207145532.png)
 
-![](../posts/static/images/Pasted image 20260207145455.png)
+![](../posts/static/images/Pasted%20image%2020260207145455.png)
 As we can see here now date is sorted based on timestamp of logs.
 
-![](../posts/static/images/Pasted image 20260207150552.png)
+![](../posts/static/images/Pasted%20image%2020260207150552.png)
 
 And here we also removed extra datetime field
 
-![](../posts/static/images/Pasted image 20260207152314.png)
+![](../posts/static/images/Pasted%20image%2020260207152314.png)
 
 ```json
 filter {
@@ -1192,7 +1192,7 @@ filter {
 }
 ```
 
-![](../posts/static/images/Pasted image 20260207234101.png)
+![](../posts/static/images/Pasted%20image%2020260207234101.png)
 
  ###### Using Conditions in Logstash:
 
@@ -1223,17 +1223,17 @@ if [result] == "PASS" {
 
 Now As you can see here instead of **PASS** we get **SUCCESS**.
 
-![](../posts/static/images/Pasted image 20260208101051.png)
+![](../posts/static/images/Pasted%20image%2020260208101051.png)
 
 ##### Unstructured Data:
 
 Created a Custom Squid Proxy Data.
 
-![](../posts/static/images/Pasted image 20260222084131.png)
+![](../posts/static/images/Pasted%20image%2020260222084131.png)
 
 The Unstructured Data is like this.
 
-![](../posts/static/images/Pasted image 20260222085604.png)
+![](../posts/static/images/Pasted%20image%2020260222085604.png)
 
 Now Using **Grok Filter** to parse the unstructured data into structure.
 
@@ -1250,7 +1250,7 @@ Syntax of GROK:
 
 Used Grok Debugger to make a pattern matching method
 
-![](../posts/static/images/Pasted image 20260222092702.png)
+![](../posts/static/images/Pasted%20image%2020260222092702.png)
 
 ```regex
 %{NUMBER:datetime} %{INT:elapsed} %{IPV4:srcip} %{WORD:proxy_result}/%{INT:http_responsecode} %{INT:bytes_xferred} %{WORD:http_method} %{URI:url} %{WORD:squid_handler}/%{IPV4:dest_ip} %{GREEDYDATA:content_type}
@@ -1331,7 +1331,7 @@ elasticsearch {
 ```
 
 
-![](../posts/static/images/Pasted image 20260222103427.png)
+![](../posts/static/images/Pasted%20image%2020260222103427.png)
 
 ##### Logstash Output:
 
@@ -1363,7 +1363,7 @@ elasticsearch {
 }
 ```
 
-![](../posts/static/images/Pasted image 20260222114947.png)
+![](../posts/static/images/Pasted%20image%2020260222114947.png)
 
 ```json
 output {
@@ -1391,9 +1391,9 @@ output {
 ```
 
 
-![](../posts/static/images/Pasted image 20260222131718.png)
+![](../posts/static/images/Pasted%20image%2020260222131718.png)
 
-![](../posts/static/images/Pasted image 20260222131745.png)
+![](../posts/static/images/Pasted%20image%2020260222131745.png)
 
 ##### Kibana:
 
