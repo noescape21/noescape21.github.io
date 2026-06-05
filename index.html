@@ -79,7 +79,7 @@
   <script type="text/babel">
     const { useState, useEffect } = React;
 
-    const KC7_LOGO = "data:image/png;base64,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";
+    const KC7_LOGO = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230f172a'/%3E%3Cpath d='M18 16h8v14l12-14h10L35 33l13 15H38L26 34v14h-8V16z' fill='%2394a3b8'/%3E%3Cpath d='M47 16h9l-11 32h-9l11-32z' fill='%236ee7b7'/%3E%3C/svg%3E";
 
     const PROFILE_DATA = {
       name: "Muhammad Saad",
@@ -104,7 +104,7 @@
       { id: 1, title: "Onboarding Apache Web Server Logs in Splunk", date: "May 28, 2026", readTime: "5 min read", file: "posts/apache_webserver_logs.md", slug: "apache-webserver-logs" },
     ];
 
-    const getPostUrl = (post) => `/posts/${post.slug}.html`;
+    const getPostUrl = (post) => `#blog/${post.slug}`;
 
     const LINKS = [
       {
@@ -161,11 +161,13 @@
       const [selectedPost, setSelectedPost] = useState(null);
       const [postContent, setPostContent] = useState("");
 
+      const enhancePostHtml = (html) => html.replace(/<img /g, '<img loading="lazy" decoding="async" ');
+
       useEffect(() => {
         if (selectedPost) {
           fetch(selectedPost.file)
             .then((res) => res.text())
-            .then((text) => setPostContent(marked.parse(text)))
+            .then((text) => setPostContent(enhancePostHtml(marked.parse(text))))
             .catch(() => setPostContent('<p class="text-red-400">Error loading post. Are you running this on a server?</p>'));
         }
       }, [selectedPost]);
@@ -174,6 +176,11 @@
       useEffect(() => {
         function syncFromHash() {
           const h = (location.hash || '').replace(/^#/, '');
+          if (!h || h === 'blog') {
+            setActiveTab('home');
+            setSelectedPost(null);
+            return;
+          }
           if (h.startsWith('blog/')) {
             const slug = h.split('/')[1];
             const post = BLOG_POSTS.find(p => p.slug === slug);
@@ -181,6 +188,7 @@
               setActiveTab('blog');
               setSelectedPost(post);
             }
+            return;
           }
         }
         syncFromHash();
@@ -190,7 +198,11 @@
 
       const navLink = (tab, label) => (
         <button
-          onClick={() => { setActiveTab(tab); setSelectedPost(null); }}
+          onClick={() => {
+            setActiveTab(tab);
+            setSelectedPost(null);
+            location.hash = tab === 'blog' ? 'blog' : '';
+          }}
           className={activeTab === tab
             ? "text-gray-100 underline decoration-emerald-500/50 underline-offset-4"
             : "text-gray-500 hover:text-gray-300 transition-colors"}
@@ -209,7 +221,7 @@
             <nav className="mb-6 border-b border-gray-800/80 pb-3">
               <div className="flex items-center justify-between font-mono text-sm">
                 <button
-                  onClick={() => { setActiveTab("home"); setSelectedPost(null); }}
+                  onClick={() => { setActiveTab("home"); setSelectedPost(null); location.hash = ''; }}
                   className="text-gray-500 hover:text-gray-300 transition-colors"
                 >
                   ~/home
@@ -299,7 +311,7 @@
                 <div className="max-w-2xl">
                   {selectedPost ? (
                     <div>
-                      <button onClick={() => setSelectedPost(null)} className="text-gray-500 hover:text-emerald-400 font-mono text-sm mb-6 flex items-center transition-colors">
+                      <button onClick={() => { setActiveTab('blog'); setSelectedPost(null); location.hash = 'blog'; }} className="text-gray-500 hover:text-emerald-400 font-mono text-sm mb-6 flex items-center transition-colors">
                         &larr; Back to articles
                       </button>
                       <article
