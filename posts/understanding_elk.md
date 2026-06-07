@@ -1,3 +1,5 @@
+ These are my personal notes related to ELK
+
  `Lab Architecture:`
 
 - OS: Ubuntu Server Latest
