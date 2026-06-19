@@ -3,8 +3,10 @@
 Field notes on offensive security, malware analysis, detection engineering, and tooling.
 
 ## Key pages
-- /          : Home — bio, experience, side projects, certifications
-- /#blog     : Blog — research write-ups and notes
+- /          : Home — retro-arcade game select terminal
+- /blog/     : Blog — active game library of detection writeups and security research
+- /about/    : About — professional profile, links, and contact information
+- /archive/  : Archive — signal archive with early legacy posts
 
 ## About
 Muhammad Saad is a Security Analyst at StrikeReady, formerly Malware Analyst at DFRSC.

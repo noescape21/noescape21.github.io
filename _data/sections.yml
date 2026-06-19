@@ -1,0 +1,35 @@
+# Source of truth for Game Boy cartridge / section selector.
+# Each entry maps to a real static URL. Order field controls game-select layout.
+# Optional PixelLab cartridge sticker art, if you want to add a simple concept mark later:
+#   pixel_art: /assets/img/pixel/cartridges/<section-id>.png
+# If pixel_art is omitted, the cartridge uses a clean color-only label.
+
+- id: blog
+  order: 1
+  label: "Blog"
+  title: NOESCAPE21
+  sub: BLOG
+  desc: "detection writeups, adversary infra research, threat hunting."
+  meta:
+    - [TYPE, BLOG]
+    - [BY, noescape21]
+  color: "#ffd23a"
+  letter: B
+  pixel_art: /assets/img/pixel/cartridges/blog.png
+  route: /blog/
+  external: false
+
+- id: about
+  order: 2
+  label: "About"
+  title: ABOUT
+  sub: PLAYER 1
+  desc: "threat research."
+  meta:
+    - [ORG, STRIKEREADY]
+    - [ROLE, SECURITY ANALYST]
+  color: "#4a9ec4"
+  letter: P
+  pixel_art: /assets/img/pixel/cartridges/about.png
+  route: /about/
+  external: false

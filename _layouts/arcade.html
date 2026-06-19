@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% include head.html %}
+</head>
+<body class="auto">
+
+{% include nav-fallback.html %}
+
+<div class="device">
+  {% include gameboy-shell.html %}
+</div>
+
+<main id="cartridge-stage" hidden></main>
+
+{% include screen-template.html %}
+
+<script src="{{ '/assets/js/arcade.js' | relative_url }}"></script>
+</body>
+</html>

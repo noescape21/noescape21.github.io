@@ -1,0 +1,48 @@
+title: Playing with Packets
+description: "Detection writeups, adversary infra research, deception, and threat hunting."
+url: https://noescape21.me
+baseurl: ""
+
+author:
+  name: Muhammad Saad
+
+permalink: /blog/:title/
+
+markdown: kramdown
+highlighter: rouge
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+collections:
+  archive:
+    output: true
+    permalink: /archive/:name/
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+  - scope:
+      path: ""
+      type: archive
+    values:
+      layout: archive
+  - scope:
+      path: ""
+    values:
+      image: /assets/img/social/og.png
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor/
+  - .bundle/
+  - design/
+  - README.md
+  - CONTENT.md
+  - CLAUDE.md

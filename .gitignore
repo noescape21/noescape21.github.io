@@ -1,0 +1,13 @@
+_site/
+.jekyll-cache/
+.jekyll-metadata
+.bundle/
+vendor/
+
+# Local reference art (copyrighted sprite rips) — inspiration only, never committed
+design/refs/
+
+# Local-only — kept on disk, not part of the public site repo
+CLAUDE.md
+CONTENT.md
+design/
