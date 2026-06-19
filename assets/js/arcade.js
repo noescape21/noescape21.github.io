@@ -230,6 +230,7 @@ function showPressStart(delay) {
    ============================================================ */
 function startGame() {
   if (view !== 'boot') return;
+  playBootSound();
   view = 'transition';
   markBooted();          // first exit from boot — return trips this session skip the loader
 
@@ -353,12 +354,21 @@ function moveStage(dir) {
   if (dir === 'down') next = Math.min(stageIdx + cols, n - 1);
   if (dir === 'up') next = Math.max(stageIdx - cols, 0);
 
-  if (next !== stageIdx) focusStageCart(next);
+  if (next !== stageIdx) {
+    playTickSound();
+    focusStageCart(next);
+  }
 }
 
 function selectStageCart() {
   if (view !== 'stage') return;
-  document.querySelectorAll('.stage-cart')[stageIdx]?.click();
+  playSelectSound();
+  const link = document.querySelectorAll('.stage-cart')[stageIdx];
+  if (link) {
+    setTimeout(() => {
+      link.click();
+    }, 220);
+  }
 }
 
 /* ============================================================
@@ -368,7 +378,15 @@ document.addEventListener('keydown', (e) => {
   if (view === 'boot') {
     if (['Enter', ' ', 'z', 'Z', 'x', 'X'].includes(e.key)) {
       e.preventDefault();
-      startGame();
+      // Ensure AudioContext is fully initialized and resumed FIRST before playing boot arpeggio
+      initAudio();
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume().then(() => {
+          startGame();
+        });
+      } else {
+        startGame();
+      }
     }
     return;
   }
@@ -392,7 +410,17 @@ document.addEventListener('keydown', (e) => {
 document.querySelectorAll('[data-action]').forEach(b => {
   b.addEventListener('click', (e) => {
     e.preventDefault();
-    if (b.dataset.action === 'select' && view === 'boot') startGame();
+    if (b.dataset.action === 'select' && view === 'boot') {
+      // Ensure AudioContext is initialized and resumed first on screen button clicks
+      initAudio();
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume().then(() => {
+          startGame();
+        });
+      } else {
+        startGame();
+      }
+    }
     if (b.dataset.action === 'select' && view === 'stage') selectStageCart();
     /* 'back' (B / SELECT pill) is intentionally inert. These gameboy controls
        only exist on the boot/title screen — the .device shell is hidden once the
@@ -410,6 +438,132 @@ document.querySelectorAll('[data-dir]').forEach(b => {
     if (view === 'stage') moveStage(b.dataset.dir);
   });
 });
+
+/* ============================================================
+   RETRO AUDIO SYNTHESIS (Web Audio API)
+   ============================================================ */
+let audioCtx = null;
+
+function initAudio() {
+  if (audioCtx) return;
+  const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+  if (AudioContextClass) {
+    audioCtx = new AudioContextClass();
+  }
+}
+
+// Classic 8-bit tick sound for D-pad navigation (mid-range for full speaker compatibility)
+function playTickSound() {
+  initAudio();
+  if (!audioCtx) return;
+  
+  if (audioCtx.state === 'suspended') {
+    audioCtx.resume();
+  }
+
+  const osc = audioCtx.createOscillator();
+  const gainNode = audioCtx.createGain();
+
+  // A crisp 8-bit short blip
+  osc.type = 'sine'; 
+  osc.frequency.setValueAtTime(800, audioCtx.currentTime); // 800Hz is perfectly audible on all laptop/phone speakers
+  osc.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.08);
+
+  gainNode.gain.setValueAtTime(0.08, audioCtx.currentTime);
+  gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
+
+  osc.connect(gainNode);
+  gainNode.connect(audioCtx.destination);
+
+  osc.start();
+  osc.stop(audioCtx.currentTime + 0.08);
+}
+
+// Ascending square-wave chime for cartridge selection / launch
+function playSelectSound() {
+  initAudio();
+  if (!audioCtx) return;
+
+  if (audioCtx.state === 'suspended') {
+    audioCtx.resume();
+  }
+
+  const now = audioCtx.currentTime;
+  const playNote = (freq, startTime, duration) => {
+    const osc = audioCtx.createOscillator();
+    const gainNode = audioCtx.createGain();
+
+    osc.type = 'square'; // classic 8-bit square wave
+    osc.frequency.setValueAtTime(freq, startTime);
+
+    gainNode.gain.setValueAtTime(0.08, startTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
+
+    osc.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+
+    osc.start(startTime);
+    osc.stop(startTime + duration);
+  };
+
+  // Play a quick ascending major arpeggio
+  playNote(523.25, now, 0.08); // C5
+  playNote(659.25, now + 0.06, 0.08); // E5
+  playNote(783.99, now + 0.12, 0.08); // G5
+  playNote(1046.50, now + 0.18, 0.18); // C6
+}
+
+// Ascending double-tone Game Boy boot arpeggio
+function playBootSound() {
+  initAudio();
+  if (!audioCtx) return;
+
+  if (audioCtx.state === 'suspended') {
+    audioCtx.resume();
+  }
+
+  const now = audioCtx.currentTime;
+  const playChime = (freq1, freq2, startTime, duration) => {
+    const osc1 = audioCtx.createOscillator();
+    const osc2 = audioCtx.createOscillator();
+    const gainNode = audioCtx.createGain();
+
+    osc1.type = 'square';
+    osc2.type = 'square';
+    
+    osc1.frequency.setValueAtTime(freq1, startTime);
+    osc2.frequency.setValueAtTime(freq2, startTime);
+
+    gainNode.gain.setValueAtTime(0.06, startTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
+
+    osc1.connect(gainNode);
+    osc2.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+
+    osc1.start(startTime);
+    osc2.start(startTime);
+    
+    osc1.stop(startTime + duration);
+    osc2.stop(startTime + duration);
+  };
+
+  // Dual tone arpeggio
+  playChime(392.00, 396.00, now, 0.07);      // G4
+  playChime(523.25, 528.00, now + 0.07, 0.07); // C5
+  playChime(659.25, 664.00, now + 0.14, 0.07); // E5
+  playChime(783.99, 789.00, now + 0.21, 0.35); // G5
+}
+
+// Global user interaction listener to fully unlock browser AudioContext on first gesture
+const unlockAudio = () => {
+  initAudio();
+  if (audioCtx && audioCtx.state === 'suspended') {
+    audioCtx.resume();
+  }
+};
+document.addEventListener('click', unlockAudio, { once: true });
+document.addEventListener('keydown', unlockAudio, { once: true });
 
 /* ============================================================
    INIT — fetch sections.json then start
